@@ -5,7 +5,7 @@
         <v-col cols="12" xs="12" md="9">
           <booking-calendar
             :selected-dates="selectedDates"
-            :booked-periods="bookedPeriods"
+            :booked-periods="bookings"
             @selected-dates="updateDate"
           />
         </v-col>
@@ -21,9 +21,25 @@
 </template>
 
 <script lang="ts" setup>
-import { Booking, Selection } from "../entity/booking";
+import { Booking, Item, Selection } from "../entity/booking";
 
-const bookedPeriods = ref<Booking[]>([]);
+const { data } = await useFetch("/api/v1/booking");
+
+const d = ref(data);
+
+const bookings = computed((): Item[] => {
+  if (!d.value) return [];
+  else
+    return d.value.data.map((it) => {
+      return {
+        id: it.id,
+        startDate: it.startDate,
+        endDate: it.endDate,
+        title: `${it.preName} ${it.lastName} - ${it.totalCosts}€`,
+        style: "background-color: brown; color:white",
+      };
+    });
+});
 
 const selectedDates = ref<Selection>({
   selectionStart: new Date(),
@@ -34,8 +50,9 @@ function updateDate(dates: Selection): void {
   selectedDates.value = dates;
 }
 
-function submitBooking(bookedPeriod: Booking) {
-  bookedPeriods.value?.push(bookedPeriod);
+async function submitBooking(bookedPeriod: Booking) {
+  await useFetch("api/v1/booking", { method: "POST", body: bookedPeriod });
+  d.value?.data.push(bookedPeriod);
 }
 </script>
 

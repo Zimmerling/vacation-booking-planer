@@ -30,13 +30,13 @@ import "../node_modules/vue-simple-calendar/dist/style.css";
 import "../node_modules/vue-simple-calendar/dist/css/default.css";
 
 import { INormalizedCalendarItem } from "vue-simple-calendar/dist/src/ICalendarItem";
-import { Booking, Selection } from "../entity/booking";
+import { Item, Selection } from "../entity/booking";
 
 const showDate = ref<Date>(new Date());
 
 const props = defineProps({
   selectedDates: { type: Object as PropType<Selection>, required: true },
-  bookedPeriods: { type: Object as PropType<Booking[]>, required: true },
+  bookedPeriods: { type: Object as PropType<Item[]>, required: true },
 });
 
 const { selectedDates, bookedPeriods } = toRefs(props);

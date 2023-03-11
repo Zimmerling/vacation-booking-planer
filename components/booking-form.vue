@@ -101,7 +101,10 @@ function bookPeriod() {
     startDate: selectedDates.value.selectionStart,
     endDate: selectedDates.value.selectionEnd,
     totalCosts: totalCosts.value,
-    title: `${preName.value} ${lastName.value}`,
+    preName: preName.value,
+    lastName: lastName.value,
+    persons: 5,
+    apartment: { name: "Test", maxPersons: 5, color: "adsf" },
   };
   emit("submit-booking", booking);
 }
