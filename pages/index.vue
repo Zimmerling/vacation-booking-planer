@@ -19,7 +19,6 @@
     </v-container>
   </div>
 </template>
-
 <script lang="ts" setup>
 import { Booking, Item, Selection } from "../entity/booking";
 
